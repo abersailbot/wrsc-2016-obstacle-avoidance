@@ -4,18 +4,32 @@ import boatdclient
 
 from navigate import Navigator
 
+# Point 0 must be on the left, point 1 on the right
+# when looking upwind
 points = boatdclient.get_current_waypoints()
 
 
-class ObstacleBehaviour(Navigator):
+class VisualObstacleAvoidance(Navigator):
     def __init__(self):
-        super(ObstacleBehaviour, self).__init__()
+        super(TestBehaviour, self).__init__()
         self.set_target(points[0])
         self.current_point = 0
+        self.distance_down = 20
+        self.distance_across = 20
+        self.BOX_BOTTOM_DIRECTION = Bearing(180)
 
         self.waypoint_checkoff_distance = 8
 
     def check_new_target(self):
+        
+        if blob_seen is true:
+            points.append(self.current_point.relative_point(BOX_BOTTOM_DIRECTION, self.distance_down))
+            if self.current_point == 0
+                self.current_point += 1
+                points.append(points[0].relative_point(self.current_point.bearing_to(points[0]), self.distance_across))
+            if self.current_point == 1
+                points.append(points[1].relative_point(self.current_point.bearing_to(points[1]), self.distance_across))
+        
         distance = self.boat.position.distance_to(self.target)
         if distance <= self.waypoint_checkoff_distance:
             print 'distance from point:', distance
@@ -26,5 +40,5 @@ class ObstacleBehaviour(Navigator):
             return None
 
 if __name__ == '__main__':
-    behaviour = ObstacleBehaviour()
+    behaviour = VisualObstacleAvoidance()
     behaviour.run()
