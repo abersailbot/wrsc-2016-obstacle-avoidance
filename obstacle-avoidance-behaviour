@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+
+import boatdclient
+
+from navigate import Navigator
+
+points = boatdclient.get_current_waypoints()
+
+
+class ObstacleBehaviour(Navigator):
+    def __init__(self):
+        super(ObstacleBehaviour, self).__init__()
+        self.set_target(points[0])
+        self.current_point = 0
+
+        self.waypoint_checkoff_distance = 8
+
+    def check_new_target(self):
+        distance = self.boat.position.distance_to(self.target)
+        if distance <= self.waypoint_checkoff_distance:
+            print 'distance from point:', distance
+            self.current_point += 1
+            return points[self.current_point]
+        else:
+            print 'distance to point', distance
+            return None
+
+if __name__ == '__main__':
+    behaviour = ObstacleBehaviour()
+    behaviour.run()
