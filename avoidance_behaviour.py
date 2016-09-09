@@ -17,7 +17,7 @@ class VisualObstacleAvoidance(Navigator):
         self.avoid_current_point = 0
         self.distance_down = 20
         self.distance_across = 20
-        self.BOX_BOTTOM_DIRECTION = Bearing(180)
+        self.BOX_BOTTOM_DIRECTION = points[0].bearing_to(points[1]) + Bearing(90)
         self.avoiding = False
 
         self.waypoint_checkoff_distance = 8
