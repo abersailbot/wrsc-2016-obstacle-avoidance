@@ -4,6 +4,8 @@ from multiprocessing import Process, Manager
 import time
 
 import obstacle_detection
+import avoidance_behaviour
+
 
 def image_processing_loop(namespace):
     print 'started loop'
@@ -22,6 +24,12 @@ if __name__ == '__main__':
         namespace.is_obstacle_detected = False
 
         p = Process(target=image_processing_loop, args=(namespace,))
+        p.start()
+
+        behaviour = VisualObstacleAvoidance()
+        behaviour.run()
+
+        p = Process(target=behaviour.run, args=(namespace,))
         p.start()
         p.join()
 
