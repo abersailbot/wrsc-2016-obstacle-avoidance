@@ -9,8 +9,10 @@ GoProIP = "10.5.5.9"
 GoProPort = 8554
 Message = "_GPHD_:0:0:2:0\n"
 
+print 'sending message to gopro'
 urllib2.urlopen("http://{0}/gp/gpControl/execute?p1=gpStream&a1=proto_v2&c1=restart".format(GoProIP)).read()
 
+print 'opening capture'
 capture = cv2.VideoCapture("udp://@{0}:{1}".format(GoProIP, GoProPort))
 
 def _process_image(img):
@@ -26,7 +28,9 @@ def _process_image(img):
     
 
 def is_obstacle_detected():
+    print 'opening socket to gopro'
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.sendto(Message, (GoProIP, GoProPort))
+    print 'reading from gopro'
     ret, img = capture.read()
     return check_for_obstacle(img)

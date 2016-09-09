@@ -6,8 +6,11 @@ import time
 import obstacle_detection
 
 def image_processing_loop(namespace):
+    print 'started loop'
     while True:
+        print 'checking is_obstacle_detected'
         if obstacle_detection.is_obstacle_detected():
+            print 'IS_OBSTACLE_DETECTED = TRUE'
             namespace.is_obstacle_detected = True
         print(namespace)
         time.sleep(0.3)
