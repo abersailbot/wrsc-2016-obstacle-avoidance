@@ -16,6 +16,7 @@ print 'opening capture'
 capture = cv2.VideoCapture("udp://@{0}:{1}".format(GoProIP, GoProPort))
 
 def _process_image(img):
+    print 'processing image'
     mask = cv2.inRange(cv2.cvtColor(img, cv2.COLOR_BGR2HSV), np.array((150,25,25)), np.array((255,200,200))) \
     + cv2.inRange(cv2.cvtColor(img, cv2.COLOR_BGR2HSV), np.array((0,100,75)), np.array((40,250,255)))
     kernel = np.ones((5,5),np.uint8)
@@ -33,4 +34,4 @@ def is_obstacle_detected():
     sock.sendto(Message, (GoProIP, GoProPort))
     print 'reading from gopro'
     ret, img = capture.read()
-    return check_for_obstacle(img)
+    return _process_image(img)

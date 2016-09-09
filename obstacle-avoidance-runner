@@ -29,8 +29,8 @@ if __name__ == '__main__':
         behaviour = VisualObstacleAvoidance()
         behaviour.run()
 
-        p = Process(target=behaviour.run, args=(namespace,))
-        p.start()
-        p.join()
+        b_p = Process(target=behaviour.run, args=(namespace,))
+        b_p.start()
+        b_p.join()
 
         print(namespace)
