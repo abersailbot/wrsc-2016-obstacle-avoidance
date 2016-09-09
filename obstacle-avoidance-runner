@@ -17,20 +17,21 @@ def image_processing_loop(namespace):
         print(namespace)
         time.sleep(0.3)
 
+
+def behaviour_spawner(self, namespace):
+    behaviour = VisualObstacleAvoidance(namespace)
+    behaviour.run()
+
+
 if __name__ == '__main__':
     with Manager() as manager:
         namespace = manager.Namespace()
 
         namespace.is_obstacle_detected = False
 
-        p = Process(target=image_processing_loop, args=(namespace,))
-        p.start()
-
-        behaviour = VisualObstacleAvoidance()
-        behaviour.run()
-
-        b_p = Process(target=behaviour.run, args=(namespace,))
-        b_p.start()
-        b_p.join()
+        behaviour_process = Process(target=behaviour_spawner, args=(namespace,))
+        behaviour_process.start()
 
         print(namespace)
+
+        image_processing_loop(namespace)

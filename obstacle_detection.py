@@ -26,7 +26,7 @@ def _process_image(img):
     cv2.drawContours(img, cnts, -1, (0,255,0), 3)
     cv2.imshow("Keypoints", img)
     cv2.waitKey(1)
-    
+
 
 def is_obstacle_detected():
     print 'opening socket to gopro'
