@@ -33,5 +33,6 @@ def is_obstacle_detected():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.sendto(Message, (GoProIP, GoProPort))
     print 'reading from gopro'
-    ret, img = capture.read()
+    for i in range(30):
+        ret, img = capture.read()
     return _process_image(img)

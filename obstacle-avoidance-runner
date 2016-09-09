@@ -15,7 +15,6 @@ def image_processing_loop(namespace):
             print 'IS_OBSTACLE_DETECTED = TRUE'
             namespace.is_obstacle_detected = True
         print(namespace)
-        time.sleep(0.3)
 
 
 def behaviour_spawner(self, namespace):
