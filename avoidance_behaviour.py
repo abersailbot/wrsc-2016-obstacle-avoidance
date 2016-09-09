@@ -10,7 +10,7 @@ points = boatdclient.get_current_waypoints()
 avoid_points = []
 
 class VisualObstacleAvoidance(Navigator):
-    def __init__(self):
+    def __init__(self, namespace):
         super(TestBehaviour, self).__init__()
         self.set_target(points[0])
         self.current_point = 0
@@ -22,10 +22,11 @@ class VisualObstacleAvoidance(Navigator):
 
         self.waypoint_checkoff_distance = 8
 
+        # shared messaging between processes
+        self.namespace = namespace
+
     def check_new_target(self):
-        
-        #TODO add blob detection thing here
-        if blob_seen is true and self.avoiding is False:
+        if self.namespace.is_obstacle_detected is True and self.avoiding is False:
             self.avoiding = True
            # avoid_points.append(self.current_point.relative_point(BOX_BOTTOM_DIRECTION, self.distance_down))
             if self.current_point == 0
