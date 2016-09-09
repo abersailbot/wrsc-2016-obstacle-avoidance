@@ -27,10 +27,12 @@ class VisualObstacleAvoidance(Navigator):
         #TODO add blob detection thing here
         if blob_seen is true and self.avoiding is False:
             self.avoiding = True
-            avoid_points.append(self.current_point.relative_point(BOX_BOTTOM_DIRECTION, self.distance_down))
+           # avoid_points.append(self.current_point.relative_point(BOX_BOTTOM_DIRECTION, self.distance_down))
             if self.current_point == 0
-                avoid_points.append(points[0].relative_point(self.current_point.bearing_to(points[0]), self.distance_across))
+                avoid_points.append(self.current_point.relative_point(BOX_BOTTOM_DIRECTION + Bearing(25), self.distance_down))
+                avoid_points.append(points[0].relative_point(self.current_point.bearing_to(points[0]), self.distance_across))                
             if self.current_point == 1
+                avoid_points.append(self.current_point.relative_point(BOX_BOTTOM_DIRECTION - Bearing(25), self.distance_down))
                 avoid_points.append(points[1].relative_point(self.current_point.bearing_to(points[1]), self.distance_across))
             self.set_target(avoid_points[0])
             
