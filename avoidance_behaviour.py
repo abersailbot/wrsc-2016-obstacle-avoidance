@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import boatdclient
+from boatdclient import Bearing
 
 from navigate import Navigator
 
@@ -11,7 +12,7 @@ avoid_points = []
 
 class VisualObstacleAvoidance(Navigator):
     def __init__(self, namespace):
-        super(TestBehaviour, self).__init__()
+        super(VisualObstacleAvoidance, self).__init__()
         self.set_target(points[0])
         self.current_point = 0
         self.avoid_current_point = 0
@@ -28,11 +29,13 @@ class VisualObstacleAvoidance(Navigator):
     def check_new_target(self):
         if self.namespace.is_obstacle_detected is True and self.avoiding is False:
             self.avoiding = True
-            avoid_points.append(self.current_point.relative_point(BOX_BOTTOM_DIRECTION, self.distance_down))
-            if self.current_point == 0
-                avoid_points.append(points[0].relative_point(self.current_point.bearing_to(points[0]), self.distance_across))
-            if self.current_point == 1
-                avoid_points.append(points[1].relative_point(self.current_point.bearing_to(points[1]), self.distance_across))
+           # avoid_points.append(self.current_point.relative_point(self.BOX_BOTTOM_DIRECTION, self.distance_down))
+            if self.current_point == 0:
+                avoid_points.append(points[self.current_point].relative_point(self.BOX_BOTTOM_DIRECTION + Bearing(25), self.distance_down))
+                avoid_points.append(points[0].relative_point(points[self.current_point].bearing_to(points[0]), self.distance_across))                
+            if self.current_point == 1:
+                avoid_points.append(points[self.current_point].relative_point(self.BOX_BOTTOM_DIRECTION - Bearing(25), self.distance_down))
+                avoid_points.append(points[1].relative_point(points[self.current_point].bearing_to(points[1]), self.distance_across))
             self.set_target(avoid_points[0])
             
         elif self.avoiding is True:
@@ -64,5 +67,9 @@ class VisualObstacleAvoidance(Navigator):
                     return None
 
 if __name__ == '__main__':
-    behaviour = VisualObstacleAvoidance()
+    from multiprocessing import Process, Manager
+
+    manager = Manager()
+    manager.is_obstacle_detected = True
+    behaviour = VisualObstacleAvoidance(manager)
     behaviour.run()
