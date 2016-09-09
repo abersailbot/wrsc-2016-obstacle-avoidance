@@ -25,7 +25,7 @@ def _process_image(img):
     cv2.waitKey(1)
     
 
-def check_for_obstacle():
+def is_obstacle_detected():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.sendto(Message, (GoProIP, GoProPort))
     ret, img = capture.read()
