@@ -13,14 +13,13 @@ class obstacle_detector:
 	(_,frame) = self.camera.read()
 	(_,frame) = self.camera.read()
 
-	mask = cv2.inRange(cv2.cvtColor(frame, cv2.COLOR_BGR2HSV), np.array((0,125,125)), np.array((50,255,255)))
+	mask = cv2.inRange(cv2.cvtColor(frame, cv2.COLOR_BGR2HSV), np.array((0,100,75)), np.array((40,250,255)))
 	kernel = np.ones((5,5),np.uint8)
-	mask = cv2.erode(mask,kernel,iterations=1)
+	mask = cv2.erode(mask,kernel,iterations=5)
 	mask = cv2.dilate(mask,kernel, iterations=5)
-	detector = cv2.SimpleBlobDetector()
-	keypoints = detector.detect(255-mask)
-	im_with_keypoints = cv2.drawKeypoints(frame, keypoints, np.array([]), (255,0,0), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-	cv2.imshow("Keypoints", im_with_keypoints)
+	(cnts, _) = cv2.findContours(mask, cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+	cv2.drawContours(frame, cnts, -1, (0,255,0), 3)
+	cv2.imshow("Keypoints", frame)
 	cv2.waitKey(0)
 	
 
